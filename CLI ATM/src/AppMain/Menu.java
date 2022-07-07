@@ -19,6 +19,8 @@ public class Menu {
     InputStreamReader isr = new InputStreamReader(System.in);
     BufferedReader input = new BufferedReader(isr);
     
+    Utama ut = new Utama();
+    
     public void clear() throws AWTException {
         Robot rob = new Robot();
         try {
@@ -36,6 +38,7 @@ public class Menu {
     }
     
     public void menu() throws IOException, AWTException {
+        clear();
         System.out.println("Selamat Datang di Desktop Banking BROLink");
         System.out.println("=====================================");
         System.out.println("Pilih menu lalu ketik angka (cth: 1),\nselanjutnya tekan enter");
@@ -48,6 +51,9 @@ public class Menu {
                 ulangi();
                 break;
             case "2" :
+                clear();
+                ut.registerData();
+//                ulangi();
                 break;
             case "3" :
                 break;
