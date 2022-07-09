@@ -33,11 +33,11 @@ public class Menu {
         }
     }
     
-    public void ulangi() throws IOException, AWTException {
+    public void ulangi() throws IOException, AWTException, InterruptedException {
         menu();
     }
     
-    public void menu() throws IOException, AWTException {
+    public void menu() throws IOException, AWTException, InterruptedException {
         clear();
         System.out.println("Selamat Datang di Desktop Banking BROLink");
         System.out.println("=====================================");
@@ -53,9 +53,12 @@ public class Menu {
             case "2" :
                 clear();
                 ut.registerData();
-//                ulangi();
+                ulangi();
                 break;
             case "3" :
+                clear();
+                ut.lupaPin();
+                ulangi();
                 break;
             case "4" :
                 break;
@@ -65,7 +68,7 @@ public class Menu {
         }
     }
     
-    public static void main(String[] args) throws IOException, AWTException {
+    public static void main(String[] args) throws IOException, AWTException, InterruptedException {
         Menu m = new Menu();
         m.menu();
     }

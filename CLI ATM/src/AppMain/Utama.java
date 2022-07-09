@@ -244,6 +244,9 @@ public class Utama {
             case "PinLogin" :
                 PinLogin();
                 break;
+            case "numberLogin" :
+                numberLogin();
+                break;
         }
     }
     
@@ -274,5 +277,99 @@ public class Utama {
         generateNumberLogin();
         PinLogin();
         simpanData();
+    }
+    
+    public void numberLogin() throws IOException, AWTException {
+        System.out.println("=========================================");
+        System.out.println("Masukkan Nomor Login Anda");
+        numberLogin = input.readLine().trim();
+            if (numberLogin.equals("batal")) { 
+                kembaliMenu(); 
+            } else if (numberLogin.length() != 16 && numberLogin.length() != 17) {
+                ulangi("numberLogin");
+            }
+    }
+    
+    public void cariData() throws IOException, AWTException, InterruptedException {
+        kon.koneksi();
+        sql = "SELECT * FROM user WHERE number_login = " + numberLogin + 
+                " and no_ktp= " + noKtp + " and nama_ayah= '" + namaAyah + 
+                "' and nama_ibu= '" + namaIbu + "';";
+        String data = "";
+        try {
+            rs = kon.stm.executeQuery(sql);
+            while (rs.next()) {                
+                data = rs.getString(2);
+                ubahPin(rs.getString(1), rs.getString(2));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        if (data.equals("")) {
+            System.out.println("=========================================");
+            System.out.println("Mohon maaf, Data tidak ditemukan");
+            Thread.sleep(3000);
+        }
+    }
+    
+    public void ubahPin(String idUser, String namaUser) throws IOException, AWTException, InterruptedException {
+        System.out.println("=========================================");
+        System.out.println("Nama Anda : " + namaUser);
+        System.out.println("=========================================");
+        System.out.println("Masukkan Pin baru Anda");
+        String pinBaru = input.readLine().trim();
+            if (pinBaru.equals("batal")) {
+                kembaliMenu();
+            } else if (pinBaru.length() <= 3 || pinBaru.length() >= 5) {
+                ulangiUbahPin(idUser, namaUser);
+            }
+            
+        System.out.println("=========================================");
+        System.out.println("Pin baru Anda : " + pinBaru);
+        System.out.println("Apakah Anda sudah yakin? Tekan 'Y' untuk melanjutkan & \n"
+                + "'N' untuk mengulangi, dan 'batal' untuk kembali ke menu utama");
+        String validasi = input.readLine().trim();
+            switch(validasi) {
+                case "batal" :
+                    kembaliMenu();
+                    break;
+                case "Y" :
+                    System.out.println("Tunggu sebentar ...");
+                    simpanPinBaru(pinBaru, idUser);
+                    break;
+                case "N" :
+                    ulangiUbahPin(idUser, namaUser);
+                    break;
+            }
+            
+        
+    }
+    
+    public void ulangiUbahPin(String idUser, String namaUser) throws IOException, AWTException, InterruptedException {
+        ubahPin(idUser, namaUser);
+    }
+    
+    public void simpanPinBaru(String pinBaru, String idUser) throws InterruptedException {
+        kon.koneksi();
+        sql = "UPDATE user SET pin_login= " + pinBaru + " WHERE id= " + idUser +";";
+        try {
+            pst = kon.conn.prepareStatement(sql);
+            pst.execute();
+            System.out.println("Pin berhasil diubah");
+            Thread.sleep(3000);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void lupaPin() throws IOException, AWTException, InterruptedException {
+        System.out.println("Lupa PIN Desktop Banking BROLink");
+        System.out.println("ketik 'batal' lalu enter untuk kembali");
+        numberLogin();
+        NoKtp();
+        NamaAyah();
+        NamaIbu();
+        cariData();
     }
 }
