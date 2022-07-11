@@ -44,7 +44,7 @@ public class Utama {
             if (noKtp.equals("batal")) {
                 kembaliMenu();
             } else if (noKtp.length() != 16 && noKtp.length() != 17) {
-                ulangi("NoKtp");
+                this.NoKtp();
             }
     }
     
@@ -56,9 +56,9 @@ public class Utama {
             if (jenKel.equals("batal")) {
                 kembaliMenu();
             } else if (jenKel.length() >= 2) {
-                ulangi("JenisKelamin");
+                this.JenisKelamin();
             } else if (!jenKel.equals("L") && !jenKel.equals("P")) {
-                ulangi("JenisKelamin");
+                this.JenisKelamin();
             }
     }
     
@@ -71,10 +71,10 @@ public class Utama {
                 kembaliMenu(); 
             } else if (Thn.length() != 4) {
                 System.out.println("Tahun tidak valid");
-                ulangi("TanggalLahir");
+                this.TanggalLahir();
             } else if (intThn <= 1960 || intThn  >= 2007) {
                 System.out.println("Hanya 1961-2007 saja");
-                ulangi("TanggalLahir");
+                this.TanggalLahir();
             }
             
         System.out.println("Masukkan Bulan Lahir Anda (01-12)");
@@ -84,10 +84,10 @@ public class Utama {
                 kembaliMenu(); 
             } else if (Bln.length() != 2) {
                 System.out.println("Gunakan 0 jika dibawah 10 atau bulan yang valid");
-                ulangi("TanggalLahir");
+                this.TanggalLahir();
             } else if (intBln <= 0 || intBln  >= 13) {
                 System.out.println("Bulan tidak valid");
-                ulangi("TanggalLahir");
+                this.TanggalLahir();
             }
             
         System.out.println("Masukkan Tanggal Lahir Anda (01-31)");
@@ -97,13 +97,13 @@ public class Utama {
                 kembaliMenu(); 
             } else if (Tgl.length() != 2) {
                 System.out.println("Gunakan 0 jika dibawah 10 atau tanggal yang valid");
-                ulangi("TanggalLahir");
+                this.TanggalLahir();
             } else if (intTgl <= 0 || intTgl  >= 32) {
                 System.out.println("Tanggal tidak valid");
-                ulangi("TanggalLahir");
+                this.TanggalLahir();
             } else if ((Tgl + Bln).equals("3002") || (Tgl + Bln).equals("3102")) {
                 System.out.println("Februari hanya sampai tanggal 29");
-                ulangi("TanggalLahir");
+                this.TanggalLahir();
             }
             
         tglLahir = Thn + "-" + Bln + "-" + Tgl;
@@ -154,35 +154,35 @@ public class Utama {
                 System.out.println("Terima Kasih");
                 break;
             case "1" :
-                ulangi("NamaLengkap");
-                ulangi("validasi");
+                this.NamaLengkap();
+                this.validasiData();
                 break;
             case "2" :
-                ulangi("NoKtp");
-                ulangi("validasi");
+                this.NoKtp();
+                this.validasiData();
                 break;
             case "3" :
-                ulangi("JenisKelamin");
-                ulangi("validasi");
+                this.JenisKelamin();
+                this.validasiData();
                 break;
             case "4" :
-                ulangi("TanggalLahir");
-                ulangi("validasi");
+                this.TanggalLahir();
+                this.validasiData();
                 break;
             case "5" :
-                ulangi("Alamat");
-                ulangi("validasi");
+                this.Alamat();
+                this.validasiData();
                 break;
             case "6" :
-                ulangi("NamaAyah");
-                ulangi("validasi");
+                this.NamaAyah();
+                this.validasiData();
                 break;
             case "7" :
-                ulangi("NamaIbu");
-                ulangi("validasi");
+                this.NamaIbu();
+                this.validasiData();
                 break;
             default:
-                ulangi("validasi");
+                this.validasiData();
         }
     }
     
@@ -206,48 +206,13 @@ public class Utama {
     
     public void PinLogin() throws IOException, AWTException {
         System.out.println("=========================================");
-        System.out.println("Buat PIN Anda");
+        System.out.println("Masukkan PIN Anda");
         pinLogin = input.readLine().trim();
             if (pinLogin.equals("batal")) {
                 kembaliMenu();
             } else if (pinLogin.length() <= 3 || pinLogin.length() >= 5) {
-                ulangi("PinLogin");
+                this.PinLogin();
             }
-    }
-    
-    public void ulangi(String ulang) throws IOException, AWTException {
-        switch(ulang) {
-            case "NamaLengkap" :
-                NamaLengkap();
-                break;
-            case "NoKtp":
-                NoKtp();
-                break;
-            case "JenisKelamin" :
-                JenisKelamin();
-                break;
-            case "TanggalLahir" :
-                TanggalLahir();
-                break;
-            case "Alamat" :
-                Alamat();
-                break;
-            case "NamaAyah" :
-                NamaAyah();
-                break;
-            case "NamaIbu" :
-                NamaIbu();
-                break;
-            case "validasi" :
-                validasiData();
-                break;
-            case "PinLogin" :
-                PinLogin();
-                break;
-            case "numberLogin" :
-                numberLogin();
-                break;
-        }
     }
     
     public void simpanData() {
@@ -286,11 +251,11 @@ public class Utama {
             if (numberLogin.equals("batal")) { 
                 kembaliMenu(); 
             } else if (numberLogin.length() != 16 && numberLogin.length() != 17) {
-                ulangi("numberLogin");
+                this.numberLogin();
             }
     }
     
-    public void cariData() throws IOException, AWTException, InterruptedException {
+    public void cariData() throws IOException, AWTException {
         kon.koneksi();
         sql = "SELECT * FROM user WHERE number_login = " + numberLogin + 
                 " and no_ktp= " + noKtp + " and nama_ayah= '" + namaAyah + 
@@ -309,11 +274,12 @@ public class Utama {
         if (data.equals("")) {
             System.out.println("=========================================");
             System.out.println("Mohon maaf, Data tidak ditemukan");
-            Thread.sleep(3000);
+            Menu mn = new Menu();
+            mn.Delayy();
         }
     }
     
-    public void ubahPin(String idUser, String namaUser) throws IOException, AWTException, InterruptedException {
+    public void ubahPin(String idUser, String namaUser) throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Nama Anda : " + namaUser);
         System.out.println("=========================================");
@@ -346,24 +312,25 @@ public class Utama {
         
     }
     
-    public void ulangiUbahPin(String idUser, String namaUser) throws IOException, AWTException, InterruptedException {
+    public void ulangiUbahPin(String idUser, String namaUser) throws IOException, AWTException {
         ubahPin(idUser, namaUser);
     }
     
-    public void simpanPinBaru(String pinBaru, String idUser) throws InterruptedException {
+    public void simpanPinBaru(String pinBaru, String idUser) {
         kon.koneksi();
         sql = "UPDATE user SET pin_login= " + pinBaru + " WHERE id= " + idUser +";";
         try {
             pst = kon.conn.prepareStatement(sql);
             pst.execute();
             System.out.println("Pin berhasil diubah");
-            Thread.sleep(3000);
+            Menu mn = new Menu();
+            mn.Delayy();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
     
-    public void lupaPin() throws IOException, AWTException, InterruptedException {
+    public void lupaPin() throws IOException, AWTException {
         System.out.println("Lupa PIN Desktop Banking BROLink");
         System.out.println("ketik 'batal' lalu enter untuk kembali");
         numberLogin();
@@ -371,5 +338,46 @@ public class Utama {
         NamaAyah();
         NamaIbu();
         cariData();
+    }
+    
+    public void cariDataLogin() throws IOException, AWTException {
+        Menu mn = new Menu();
+        MenuLogin ml = new MenuLogin();
+        
+        kon.koneksi();
+        sql = "SELECT * FROM user WHERE number_login= " + numberLogin + " AND pin_login= " + 
+                pinLogin + ";";
+        String data = "";
+        try {
+            rs = kon.stm.executeQuery(sql);
+            while (rs.next()) {                
+                data = "true";
+                ml.id = rs.getString(1);
+                ml.nama_lengkap = rs.getString(2);
+                ml.number_login = rs.getString(9);
+                ml.pin_login = rs.getString(10);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        if (data.equals("true")) {
+            System.out.println("=========================================");
+            System.out.println("Berhasil Login");
+            mn.Delayy();
+            ml.menuLogin();
+        } else {
+            System.out.println("=========================================");
+            System.out.println("Nomor Login dan atau Pin Salah");
+            mn.Delayy();
+        }
+    }
+    
+    public void login() throws IOException, AWTException {
+        System.out.println("Login Desktop Banking BROLink");
+        System.out.println("ketik 'batal' lalu enter untuk kembali");
+        numberLogin();
+        PinLogin();
+        cariDataLogin();
     }
 }

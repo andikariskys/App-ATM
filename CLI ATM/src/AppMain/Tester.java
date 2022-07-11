@@ -13,27 +13,17 @@ package AppMain;
 
 //              Hanya untuk test coding saja
 
-import java.sql.*;
-
 public class Tester {
     public void sql() {
-        Koneksi kon = new Koneksi();
-        kon.koneksi();
-        String data = "";
-        try {
-            String sql = "SELECT * FROM user WHERE id=1";
-            ResultSet rs = kon.stm.executeQuery(sql);
-            while (rs.next()) {                
-                data = rs.getString(1);
-                System.out.println(rs.getString(2));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        String cetak = "";
+        System.out.println(String.format("%-10s | %8s | %8s", "hello", "helli", "hella\n"));
         
-        if (data.equals("")) {
-            System.out.println("Data tidak ditemukan");
-        }
+        System.out.format("%-10s | %8s | %8s", "hello", "helli", "hella\n");
+        System.out.format("%-10s | %8s | %8s", "dennyszta", "barkrode", "terizawa");
+        System.out.println("");
+        
+        System.out.println(String.format("%-3s | %-12s | %-10s | %-15s | %-20s | %-15s", 
+                "No", "Tgl Transaksi", "Nama Transaksi", "Kode/No Tujuan", "Nama Penerima", "Nominal"));
     }
     
     public static void main(String[] args) {
