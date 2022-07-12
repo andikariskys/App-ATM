@@ -142,7 +142,7 @@ public class Utama {
         System.out.println("7. Nama Ibu      : " + namaIbu);
         System.out.println("=========================================");
         System.out.println("Ketik 'Ya' atau 'Y' lalu tekan enter jika sudah benar");
-        System.out.println("Jika terjadi kesalahn ketik angka 1-7, \nlalu tekan enter");
+        System.out.println("Jika terjadi kesalahan ketik angka 1-7, \nlalu tekan enter");
         String pilihan = input.readLine().trim();
         switch(pilihan) {
             case "Ya" :
@@ -206,7 +206,7 @@ public class Utama {
     
     public void PinLogin() throws IOException, AWTException {
         System.out.println("=========================================");
-        System.out.println("Masukkan PIN Anda");
+        System.out.println("Masukkan PIN Anda (4 Digit)");
         pinLogin = input.readLine().trim();
             if (pinLogin.equals("batal")) {
                 kembaliMenu();
@@ -223,6 +223,10 @@ public class Utama {
                         namaIbu + "', " + numberLogin + ", " + pinLogin + ", 0);";
                 pst = kon.conn.prepareStatement(sql);
                 pst.execute();
+                System.out.println("=========================================");
+                System.out.println("Akun berhasil dibuat");
+                Menu mn = new Menu();
+                mn.Delayy();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
