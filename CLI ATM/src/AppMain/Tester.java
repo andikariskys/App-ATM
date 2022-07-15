@@ -15,15 +15,8 @@ package AppMain;
 
 public class Tester {
     public void sql() {
-        String cetak = "";
-        System.out.println(String.format("%-10s | %8s | %8s", "hello", "helli", "hella\n"));
-        
-        System.out.format("%-10s | %8s | %8s", "hello", "helli", "hella\n");
-        System.out.format("%-10s | %8s | %8s", "dennyszta", "barkrode", "terizawa");
-        System.out.println("");
-        
-        System.out.println(String.format("%-3s | %-12s | %-10s | %-15s | %-20s | %-15s", 
-                "No", "Tgl Transaksi", "Nama Transaksi", "Kode/No Tujuan", "Nama Penerima", "Nominal"));
+        String terim = "Hello World";
+        System.out.println(terim.substring(0, 4));
     }
     
     public static void main(String[] args) {

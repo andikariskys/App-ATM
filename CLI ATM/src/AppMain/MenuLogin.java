@@ -34,7 +34,7 @@ public class MenuLogin {
         System.out.println("=====================================");
         System.out.println("Pilih menu lalu ketik angka (cth: 1),\nselanjutnya tekan enter");
         System.out.println("1. Informasi Saldo");
-        System.out.println("2. Pembelian/Pembayaran");
+        System.out.println("2. Pembayaran Olshop");
         System.out.println("3. Top Up e-Money");
         System.out.println("4. Top Up lainnya/Bayar Tagihan");
         System.out.println("5. Transfer");
@@ -49,10 +49,14 @@ public class MenuLogin {
                 this.menuLogin();
                 break;
             case "2" :
+                PembayaranOlshop();
+                this.menuLogin();
                 break;
             case "3" :
+                PembayaranEMoney();
                 break;
             case "4" :
+                PembayaranLainnya();
                 break;
             case "5" :
                 transferSaldo();
@@ -382,5 +386,314 @@ public class MenuLogin {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    public void PembayaranOlshop() throws IOException, AWTException {
+        mn.clear();
+        
+        System.out.println("Pembayaran Olshop");
+        System.out.println("=====================================");
+        System.out.println("Pilih menu lalu ketik angka (cth: 1),\nselanjutnya tekan enter");
+        System.out.println("1. Shopee");
+        System.out.println("2. Tokopedia");
+        System.out.println("3. Lazada");
+        System.out.println("0. Kembali");
+        System.out.print("Pilihan Anda -->");
+        String pilihan = input.readLine().trim();
+        switch (pilihan) {
+            case "1" :
+                pembayaran("Shopee");
+                break;
+            case "2" :
+                pembayaran("Tokopedia");
+                break;
+            case "3" :
+                pembayaran("Lazada");
+                break;
+            case "0" :
+                this.menuLogin();
+                break;
+            default:
+                this.PembayaranOlshop();
+        }
+    }
+    
+    public void PembayaranEMoney() throws IOException, AWTException {
+        mn.clear();
+        
+        System.out.println("Pembayaran Olshop");
+        System.out.println("=====================================");
+        System.out.println("Pilih menu lalu ketik angka (cth: 1),\nselanjutnya tekan enter");
+        System.out.println("1. Shopeepay");
+        System.out.println("2. Gopay");
+        System.out.println("3. Lazada Credit");
+        System.out.println("0. Kembali");
+        System.out.print("Pilihan Anda -->");
+        String pilihan = input.readLine().trim();
+        switch (pilihan) {
+            case "1" :
+                pembayaran("Shopeepay");
+                break;
+            case "2" :
+                pembayaran("Gopay");
+                break;
+            case "3" :
+                pembayaran("Lazada Credit");
+                break;
+            case "0" :
+                this.menuLogin();
+                break;
+            default:
+                this.PembayaranEMoney();
+        }
+    }
+    
+    public void PembayaranLainnya() throws IOException, AWTException {
+        mn.clear();
+        
+        System.out.println("Pembayaran Olshop");
+        System.out.println("=====================================");
+        System.out.println("Pilih menu lalu ketik angka (cth: 1),\nselanjutnya tekan enter");
+        System.out.println("1. Tagihan PLN");
+        System.out.println("2. Tagihan PDAM");
+        System.out.println("3. Tagihan Indihome");
+        System.out.println("0. Kembali");
+        System.out.print("Pilihan Anda -->");
+        String pilihan = input.readLine().trim();
+        switch (pilihan) {
+            case "1" :
+                pembayaran("Tagihan PLN");
+                break;
+            case "2" :
+                pembayaran("Tagihan PDAM");
+                break;
+            case "3" :
+                pembayaran("Tagihan Indihome");
+                break;
+            case "0" :
+                this.menuLogin();
+                break;
+            default:
+                this.PembayaranLainnya();
+        }
+    }
+    
+    public void pembayaran(String nama) throws IOException, AWTException {
+        mn.clear();
+        
+        System.out.println("Pembayaran " + nama);
+        System.out.println("=====================================");
+        System.out.println("Masukkan Kode Pembayaran");
+        System.out.println("atau ketik 'batal' lalu enter untuk kembali");
+        String kode = input.readLine().trim();
+        
+        switch (nama) {
+            case "Shopee" :
+                if (kode.equals("batal")) {
+                    PembayaranOlshop();
+                } else if (!kode.substring(0, 4).equals("SHPE") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                }
+                break;
+            case "Tokopedia" :
+                if (kode.equals("batal")) {
+                    PembayaranOlshop();
+                } else if (!kode.substring(0, 4).equals("TKPD") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                }
+                break;
+            case "Lazada" :
+                if (kode.equals("batal")) {
+                    PembayaranOlshop();
+                } else if (!kode.substring(0, 4).equals("LZDA") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                }
+                break;
+            case "Shopeepay" :
+                if (kode.equals("batal")) {
+                    this.PembayaranEMoney();
+                } else if (!kode.substring(0, 3).equals("SHP") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                } 
+                break;
+            case "Gopay" :
+                if (kode.equals("batal")) {
+                    this.PembayaranEMoney();
+                } else if (!kode.substring(0, 3).equals("GPY") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                } 
+                break;
+            case "Lazada Credit" :
+                if (kode.equals("batal")) {
+                    this.PembayaranEMoney();
+                } else if (!kode.substring(0, 3).equals("LZC") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                } 
+                break;
+            case "Tagihan PLN" :
+                if (kode.equals("batal")) {
+                    this.PembayaranLainnya();
+                } else if (!kode.substring(0, 3).equals("LST")) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                } else if (kode.length() != 12) {
+                    this.pembayaran(nama);
+                }
+                break;
+            case "Tagihan PDAM" :
+                if (kode.equals("batal")) {
+                    this.PembayaranLainnya();
+                } else if (!kode.substring(0, 3).equals("AIR") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                }
+                break;
+            case "Tagihan Indihome" :
+                if (kode.equals("batal")) {
+                    this.PembayaranLainnya();
+                } else if (!kode.substring(0, 3).equals("WFI") || kode.length() != 12) {
+                    System.out.println("=====================================");
+                    System.out.println("Kode yang Anda masukkan tidak valid");
+                    mn.Delayy();
+                    
+                    this.pembayaran(nama);
+                } 
+                break;
+        }
+        
+        String data = "", status = "", nm_penerima = "";
+        int nominalPembayaran = 0;
+        
+        sql = "SELECT * FROM transaksi WHERE tujuan = '" + kode + "'";
+        kon.koneksi();
+        try {
+            rs = kon.stm.executeQuery(sql);
+            while (rs.next()) {
+                data = "ada";
+                status = rs.getString("status");
+                nominalPembayaran = rs.getInt("nominal");
+                nm_penerima = rs.getString("nama_penerima");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        if (data.equals("")) {
+            System.out.println("=====================================");
+            System.out.println("Maaf, kode tidak ditemukan");
+            mn.Delayy();
+            
+            this.pembayaran(nama);
+        } else if (status.equals("sukses")) {
+            System.out.println("=====================================");
+            System.out.println("Transaksi telah diselesaikan");
+            mn.Delayy();
+        }
+        
+        validasiPembayaran(nominalPembayaran, kode, nm_penerima);
+    }
+    
+    public void validasiPembayaran(int nominalPembayaran, String kode, String nm_penerima) throws IOException, AWTException {
+        int saldoUser = 0;
+        
+        sql = "SELECT saldo FROM user WHERE id = " + id;
+        kon.koneksi();
+        try {
+            rs = kon.stm.executeQuery(sql);
+            while (rs.next()) {
+                saldoUser = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        
+        System.out.println("=====================================");
+        System.out.println("Saldo Anda      : " + saldoUser);
+        System.out.println("Username Tujuan : " + nm_penerima);
+        System.out.println("Nominal         : " + nominalPembayaran);
+        System.out.println("=====================================");
+        System.out.println("Apakah Anda yakin ingin melanjutkan?");
+        System.out.println("Ketik 'Y' lalu enter untuk melanjutkan");
+        System.out.println("Atau ketik 'batal' lalu enter untuk kembali");
+        String pilihan = input.readLine().trim();
+        
+        switch (pilihan) {
+            case "batal" :
+                this.menuLogin();
+                break;
+            case "Y" :
+                if (saldoUser < nominalPembayaran) {
+                    System.out.println("=====================================");
+                    System.out.println("Saldo Anda tidak mencukupi");
+                    mn.Delayy();
+                    
+                    this.menuLogin();
+                } else {
+                    simpanPembayaran(saldoUser, nominalPembayaran, kode);
+                }
+                break;
+            default:
+                this.validasiPembayaran(nominalPembayaran, kode, nm_penerima);
+                break;
+        }
+    }
+    
+    public void simpanPembayaran(int saldoUser, int nominalPembayaran, String kode) throws IOException, AWTException {
+        int total = saldoUser - nominalPembayaran;
+        
+        sql = "UPDATE user SET saldo = " + total + " WHERE number_login= " + number_login;
+        kon.koneksi();
+        try {
+            pst = kon.conn.prepareStatement(sql);
+            pst.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        sql = "UPDATE transaksi SET tgl_transaksi = current_timestamp(), id_user = " + id + ", "
+                + "status='sukses' WHERE tujuan = '" + kode + "'";
+        kon.koneksi();
+        try {
+            pst = kon.conn.prepareStatement(sql);
+            pst.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        System.out.println("=====================================");
+        System.out.println("Transaksi Berhasil");
+        mn.Delayy();
+        this.menuLogin();
     }
 }
