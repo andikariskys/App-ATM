@@ -40,10 +40,6 @@ public class Menu {
         }
     }
     
-    public void ulangi() throws IOException, AWTException {
-        menu();
-    }
-    
     public void menu() throws IOException, AWTException {
         clear();
         System.out.println("Selamat Datang di Desktop Banking BROLink");
@@ -56,26 +52,29 @@ public class Menu {
         switch (pilihan) {
             case "1" :
                 clear();
-                ut.login();
-                ulangi();
+                ut.login("menuLogin");
+                this.menu();
                 break;
             case "2" :
                 clear();
                 ut.registerData();
-                ulangi();
+                this.menu();
                 break;
             case "3" :
                 clear();
                 ut.lupaPin();
-                ulangi();
+                this.menu();
                 break;
             case "4" :
+                clear();
+                ut.login("modeAdmin");
+                this.menu();
                 break;
             case "0" :
                 System.exit(0);
                 break;
             default:
-                ulangi();
+                this.menu();
                 break;
         }
     }

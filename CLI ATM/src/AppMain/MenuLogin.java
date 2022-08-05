@@ -696,4 +696,59 @@ public class MenuLogin {
         mn.Delayy();
         this.menuLogin();
     }
+    
+    public void modeAdmin() throws IOException {
+        System.out.println("=========================================");
+        System.out.println("1. Tambah Saldo");
+        System.out.println("2. Buat Pesanan");
+        String pilihan = input.readLine().trim();
+        switch(pilihan) {
+            case "1" :
+                tambahSaldo();
+                this.modeAdmin();
+                break;
+            case "2" :
+                buatPesanan();
+                this.modeAdmin();
+                break;
+            default :
+                this.modeAdmin();
+                break;
+        }
+    }
+    
+    public void tambahSaldo() throws IOException {
+        String saldoUser = null;
+        System.out.println("=====================================");
+        sql = "SELECT saldo FROM user WHERE id=" + id;
+        kon.koneksi();
+        try {
+            rs = kon.stm.executeQuery(sql);
+            while (rs.next()) {                
+                System.out.println("Saldo Anda : Rp. " + rs.getString(1));
+                saldoUser = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("=====================================");
+        System.out.println("Masukkan jumlah penambahan saldo");
+        System.out.println("(Tanpa meggunakan titik (.) )");
+        String tambahSaldo = input.readLine().trim();
+        
+        int total = Integer.valueOf(tambahSaldo) + Integer.valueOf(saldoUser);
+        sql = "UPDATE user SET saldo = " + total + " WHERE number_login= " + number_login;
+        kon.koneksi();
+        try {
+            pst = kon.conn.prepareStatement(sql);
+            pst.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void buatPesanan() {
+        System.out.println("=====================================");
+        System.out.println("1. ");
+    }
 }

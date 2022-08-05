@@ -344,7 +344,7 @@ public class Utama {
         cariData();
     }
     
-    public void cariDataLogin() throws IOException, AWTException {
+    public void cariDataLogin(String pilihan) throws IOException, AWTException {
         Menu mn = new Menu();
         MenuLogin ml = new MenuLogin();
         
@@ -369,7 +369,11 @@ public class Utama {
             System.out.println("=========================================");
             System.out.println("Berhasil Login");
             mn.Delayy();
-            ml.menuLogin();
+            if (pilihan.equals("menuLogin")) {
+                ml.menuLogin();
+            } else {
+                ml.modeAdmin();
+            }
         } else {
             System.out.println("=========================================");
             System.out.println("Nomor Login dan atau Pin Salah");
@@ -377,11 +381,11 @@ public class Utama {
         }
     }
     
-    public void login() throws IOException, AWTException {
+    public void login(String pilihan) throws IOException, AWTException {
         System.out.println("Login Desktop Banking BROLink");
         System.out.println("ketik 'batal' lalu enter untuk kembali");
         numberLogin();
         PinLogin();
-        cariDataLogin();
+        cariDataLogin(pilihan);
     }
 }
