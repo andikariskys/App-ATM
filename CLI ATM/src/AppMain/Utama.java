@@ -23,21 +23,21 @@ public class Utama {
     PreparedStatement pst;
     String sql;
     
-    public void kembaliMenu() throws IOException, AWTException {
+    private void kembaliMenu() throws IOException, AWTException {
         Menu mn = new Menu();
         mn.menu();
     }
     
     String namaLengkap, noKtp, jenKel, tglLahir, alamat, namaAyah, namaIbu, numberLogin, pinLogin;
     
-    public void NamaLengkap() throws IOException, AWTException {
+    private void NamaLengkap() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan Nama Lengkap Anda, lalu tekan Enter");
         namaLengkap = input.readLine().trim();
             if (namaLengkap.equals("batal")) { kembaliMenu(); }
     }
     
-    public void NoKtp() throws IOException, AWTException {
+    private void NoKtp() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan No. KTP Anda");
         noKtp = input.readLine().trim();
@@ -48,7 +48,7 @@ public class Utama {
             }
     }
     
-    public void JenisKelamin() throws IOException, AWTException {
+    private void JenisKelamin() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan jenis kelamin L = Laki-laki/P = Perempuan");
         System.out.println("---------------> Ketik (L/P) saja <---------------");
@@ -62,7 +62,7 @@ public class Utama {
             }
     }
     
-    public void TanggalLahir() throws IOException, AWTException {
+    private void TanggalLahir() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan Tahun Lahir Anda (1961-2006)");
         String Thn = input.readLine().trim();
@@ -109,28 +109,28 @@ public class Utama {
         tglLahir = Thn + "-" + Bln + "-" + Tgl;
     }
     
-    public void Alamat() throws IOException, AWTException {
+    private void Alamat() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan Alamat tempat tinggal Anda");
         alamat = input.readLine().trim();
             if (alamat.equals("batal")) { kembaliMenu(); }
     }
     
-    public void NamaAyah() throws IOException, AWTException {
+    private void NamaAyah() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan Nama Ayah Anda");
         namaAyah = input.readLine().trim();
             if (namaAyah.equals("batal")) { kembaliMenu(); }
     }
     
-    public void NamaIbu() throws IOException, AWTException {
+    private void NamaIbu() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan Nama Ibu Anda");
         namaIbu = input.readLine().trim();
             if (namaIbu.equals("batal")) { kembaliMenu(); }
     }
     
-    public void validasiData() throws IOException, AWTException {
+    private void validasiData() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Apakah data dibawah ini sudah benar?");
         System.out.println("1. Nama Lengkap  : " + namaLengkap);
@@ -186,7 +186,7 @@ public class Utama {
         }
     }
     
-    public void generateNumberLogin() {
+    private void generateNumberLogin() {
         kon.koneksi();
         sql = "SELECT FLOOR(RAND() * 999999999999)";
         String nl = null;
@@ -204,7 +204,7 @@ public class Utama {
         }
     }
     
-    public void PinLogin() throws IOException, AWTException {
+    private void PinLogin() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan PIN Anda (4 Digit)");
         pinLogin = input.readLine().trim();
@@ -215,7 +215,7 @@ public class Utama {
             }
     }
     
-    public void simpanData() {
+    private void simpanData() {
         kon.koneksi();
         try {
                 sql = "INSERT INTO user VALUES(null, '" + namaLengkap + "', " + noKtp + ", '" +
@@ -248,7 +248,7 @@ public class Utama {
         simpanData();
     }
     
-    public void numberLogin() throws IOException, AWTException {
+    private void numberLogin() throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Masukkan Nomor Login Anda");
         numberLogin = input.readLine().trim();
@@ -259,7 +259,7 @@ public class Utama {
             }
     }
     
-    public void cariData() throws IOException, AWTException {
+    private void cariData() throws IOException, AWTException {
         kon.koneksi();
         sql = "SELECT * FROM user WHERE number_login = " + numberLogin + 
                 " and no_ktp= " + noKtp + " and nama_ayah= '" + namaAyah + 
@@ -283,7 +283,7 @@ public class Utama {
         }
     }
     
-    public void ubahPin(String idUser, String namaUser) throws IOException, AWTException {
+    private void ubahPin(String idUser, String namaUser) throws IOException, AWTException {
         System.out.println("=========================================");
         System.out.println("Nama Anda : " + namaUser);
         System.out.println("=========================================");
@@ -316,11 +316,11 @@ public class Utama {
         
     }
     
-    public void ulangiUbahPin(String idUser, String namaUser) throws IOException, AWTException {
+    private void ulangiUbahPin(String idUser, String namaUser) throws IOException, AWTException {
         ubahPin(idUser, namaUser);
     }
     
-    public void simpanPinBaru(String pinBaru, String idUser) {
+    private void simpanPinBaru(String pinBaru, String idUser) {
         kon.koneksi();
         sql = "UPDATE user SET pin_login= " + pinBaru + " WHERE id= " + idUser +";";
         try {
@@ -344,7 +344,7 @@ public class Utama {
         cariData();
     }
     
-    public void cariDataLogin(String pilihan) throws IOException, AWTException {
+    private void cariDataLogin(String pilihan) throws IOException, AWTException {
         Menu mn = new Menu();
         MenuLogin ml = new MenuLogin();
         
@@ -378,6 +378,7 @@ public class Utama {
             System.out.println("=========================================");
             System.out.println("Nomor Login dan atau Pin Salah");
             mn.Delayy();
+            mn.clear();
         }
     }
     

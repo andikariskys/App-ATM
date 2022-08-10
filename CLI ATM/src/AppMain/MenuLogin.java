@@ -13,6 +13,7 @@ package AppMain;
 import java.awt.AWTException;
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class MenuLogin {
     InputStreamReader isr = new InputStreamReader(System.in);
@@ -69,6 +70,7 @@ public class MenuLogin {
                 hapusAkun();
                 break;
             case "0" :
+                mn.menu();
                 break;
             default:
                 this.menuLogin();
@@ -76,7 +78,7 @@ public class MenuLogin {
         }
     }
     
-    public void informasiSaldo() throws IOException, AWTException {
+    private void informasiSaldo() throws IOException, AWTException {
         mn.clear();
         
         System.out.println("Informasi Saldo");
@@ -103,13 +105,10 @@ public class MenuLogin {
         }
     }
     
-    public void lihatSaldo() throws IOException, AWTException {
+    private void lihatSaldo() throws IOException, AWTException {
         mn.clear();
         System.out.println("Lihat Saldo");
         System.out.println("=====================================");
-        System.out.println("Ketik angka 0 lalu tekan enter untuk kembali");
-        System.out.println("");
-        
         sql = "SELECT saldo FROM user WHERE id=" + id;
         kon.koneksi();
         try {
@@ -123,6 +122,8 @@ public class MenuLogin {
         
         System.out.println("");
         System.out.println("=====================================");
+        System.out.println("Ketik angka 0 lalu tekan enter untuk kembali");
+        System.out.println("");
         System.out.print("Pilihan Anda -->");
         String pilihan = input.readLine().trim();
         switch (pilihan) {
@@ -135,19 +136,17 @@ public class MenuLogin {
         }
     }
     
-    public void transaksiTerakhir() throws IOException, AWTException {
+    private void transaksiTerakhir() throws IOException, AWTException {
         mn.clear();
         System.out.println("Lihat Transaksi Terakhir");
         System.out.println("=====================================");
-        System.out.println("Ketik angka 0 lalu tekan enter untuk kembali");
-        System.out.println("");
         
-        sql = "SELECT * FROM transaksi WHERE id= " + id + " AND status = 'sukses' "
+        sql = "SELECT * FROM transaksi WHERE id_user= " + id + " AND status = 'sukses' "
                 + "ORDER BY tgl_transaksi DESC LIMIT 5";
         kon.koneksi();
         try {
             int no = 1;
-            String format = "%-3s | %-20s | %-15s | %-17s | %-20s | %-15s";
+            String format = "%-3s | %-20s | %-20s | %-17s | %-20s | %-15s";
             System.out.println(String.format(format, "No", "Tgl Transaksi", 
                     "Nama Transaksi", "Kode/No Tujuan", "Nama Penerima", "Nominal"));
             rs = kon.stm.executeQuery(sql);
@@ -162,6 +161,8 @@ public class MenuLogin {
         
         System.out.println("");
         System.out.println("=====================================");
+        System.out.println("Ketik angka 0 lalu tekan enter untuk kembali");
+        System.out.println("");
         System.out.print("Pilihan Anda -->");
         String pilihan = input.readLine().trim();
         switch (pilihan) {
@@ -177,7 +178,7 @@ public class MenuLogin {
     String number_penerima, nama_penerima = "";
     int nominal, saldo, saldoPenerima;
       
-    public void numberPenerima() throws IOException, AWTException {
+    private void numberPenerima() throws IOException, AWTException {
         mn.clear();
         
         System.out.println("Transfer Saldo");
@@ -209,7 +210,7 @@ public class MenuLogin {
         }
     }
     
-    public void nominalTransfer() throws IOException, AWTException {
+    private void nominalTransfer() throws IOException, AWTException {
         System.out.println("=====================================");
         System.out.println("Masukkan Nominal");
         nominal = Integer.parseInt(input.readLine().trim());
@@ -233,7 +234,7 @@ public class MenuLogin {
         }
     }
     
-    public void validasiTransfer() throws IOException, AWTException {
+    private void validasiTransfer() throws IOException, AWTException {
         System.out.println("=====================================");
         System.out.println("    Saldo Anda          : " + saldo);
         System.out.println("1.  No. Tujuan          : " + number_penerima);
@@ -269,7 +270,7 @@ public class MenuLogin {
         }
     }
     
-    public void validasiPin() throws IOException {
+    private void validasiPin() throws IOException {
         System.out.println("=====================================");
         System.out.println("Masukkan Pin Anda");
         String pinUser = input.readLine().trim();
@@ -280,7 +281,7 @@ public class MenuLogin {
         }
     }
     
-    public void simpanTransfer() {
+    private void simpanTransfer() {
         sql = "SELECT saldo FROM user WHERE number_login = " + number_penerima;
         kon.koneksi();
         try {
@@ -325,13 +326,13 @@ public class MenuLogin {
         mn.Delayy();
     }
     
-    public void transferSaldo() throws IOException, AWTException {
+    private void transferSaldo() throws IOException, AWTException {
         numberPenerima();
         nominalTransfer();
         validasiTransfer();
     }
     
-    public void pinLama() throws AWTException, IOException {
+    private void pinLama() throws AWTException, IOException {
         mn.clear();
         
         System.out.println("=====================================");
@@ -347,7 +348,7 @@ public class MenuLogin {
         }
     }
     
-    public void pinBaru() throws IOException, AWTException {
+    private void pinBaru() throws IOException, AWTException {
         System.out.println("=====================================");
         System.out.println("Masukkan Pin baru Anda (4 Digit) atau \n"
                 + "ketik 'batal' untuk membatalkan lalu tekan enter");
@@ -373,12 +374,12 @@ public class MenuLogin {
         }
     }
     
-    public void ubahPin() throws AWTException, IOException {
+    private void ubahPin() throws AWTException, IOException {
         pinLama();
         pinBaru();
     }
     
-    public void hapusAkun() {
+    private void hapusAkun() {
         sql = "DELETE FROM user WHERE id = " + id;
         try {
             pst = kon.conn.prepareStatement(sql);
@@ -388,7 +389,7 @@ public class MenuLogin {
         }
     }
     
-    public void PembayaranOlshop() throws IOException, AWTException {
+    private void PembayaranOlshop() throws IOException, AWTException {
         mn.clear();
         
         System.out.println("Pembayaran Olshop");
@@ -418,7 +419,7 @@ public class MenuLogin {
         }
     }
     
-    public void PembayaranEMoney() throws IOException, AWTException {
+    private void PembayaranEMoney() throws IOException, AWTException {
         mn.clear();
         
         System.out.println("Pembayaran Olshop");
@@ -448,7 +449,7 @@ public class MenuLogin {
         }
     }
     
-    public void PembayaranLainnya() throws IOException, AWTException {
+    private void PembayaranLainnya() throws IOException, AWTException {
         mn.clear();
         
         System.out.println("Pembayaran Olshop");
@@ -478,7 +479,7 @@ public class MenuLogin {
         }
     }
     
-    public void pembayaran(String nama) throws IOException, AWTException {
+    private void pembayaran(String nama) throws IOException, AWTException {
         mn.clear();
         
         System.out.println("Pembayaran " + nama);
@@ -623,7 +624,7 @@ public class MenuLogin {
         validasiPembayaran(nominalPembayaran, kode, nm_penerima);
     }
     
-    public void validasiPembayaran(int nominalPembayaran, String kode, String nm_penerima) throws IOException, AWTException {
+    private void validasiPembayaran(int nominalPembayaran, String kode, String nm_penerima) throws IOException, AWTException {
         int saldoUser = 0;
         
         sql = "SELECT saldo FROM user WHERE id = " + id;
@@ -669,7 +670,7 @@ public class MenuLogin {
         }
     }
     
-    public void simpanPembayaran(int saldoUser, int nominalPembayaran, String kode) throws IOException, AWTException {
+    private void simpanPembayaran(int saldoUser, int nominalPembayaran, String kode) throws IOException, AWTException {
         int total = saldoUser - nominalPembayaran;
         
         sql = "UPDATE user SET saldo = " + total + " WHERE number_login= " + number_login;
@@ -697,10 +698,15 @@ public class MenuLogin {
         this.menuLogin();
     }
     
-    public void modeAdmin() throws IOException {
+    public void modeAdmin() throws IOException, AWTException {
+        mn.clear();
+        System.out.println("Mode Admin");
         System.out.println("=========================================");
         System.out.println("1. Tambah Saldo");
         System.out.println("2. Buat Pesanan");
+        System.out.println("3. Hapus Pesanan");
+        System.out.println("0. Keluar");
+        System.out.print("Pilihan Anda --> ");
         String pilihan = input.readLine().trim();
         switch(pilihan) {
             case "1" :
@@ -711,13 +717,21 @@ public class MenuLogin {
                 buatPesanan();
                 this.modeAdmin();
                 break;
+            case "3" :
+                hapusPesanan();
+                this.modeAdmin();
+                break;
+            case "0" :
+                mn.menu();
+                break;
             default :
                 this.modeAdmin();
                 break;
         }
     }
     
-    public void tambahSaldo() throws IOException {
+    private void tambahSaldo() throws IOException, AWTException {
+        mn.clear();
         String saldoUser = null;
         System.out.println("=====================================");
         sql = "SELECT saldo FROM user WHERE id=" + id;
@@ -734,21 +748,237 @@ public class MenuLogin {
         System.out.println("=====================================");
         System.out.println("Masukkan jumlah penambahan saldo");
         System.out.println("(Tanpa meggunakan titik (.) )");
+        System.out.println("Atau ketik 'batal' lalu enter untuk kembali");
         String tambahSaldo = input.readLine().trim();
         
-        int total = Integer.valueOf(tambahSaldo) + Integer.valueOf(saldoUser);
-        sql = "UPDATE user SET saldo = " + total + " WHERE number_login= " + number_login;
+        if (!tambahSaldo.equals("batal")) {
+            int total = Integer.valueOf(tambahSaldo) + Integer.valueOf(saldoUser);
+            sql = "UPDATE user SET saldo = " + total + " WHERE number_login= " + number_login;
+            kon.koneksi();
+            try {
+                pst = kon.conn.prepareStatement(sql);
+                pst.execute();
+                System.out.println("Total Saldo Anda saat ini : " + total);
+                mn.Delayy();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void buatPesanan() throws AWTException, IOException {
+        mn.clear();
+        System.out.println("=====================================");
+        System.out.println("1. Pembayaran Shopee \n2. Pembayaran Tokopedia \n3. Pembayaran Lazada");
+        System.out.println("4. Top Up Shopeepay \n5. Top Up Lazada Credit \n6. Top Up Gopay");
+        System.out.println("7. Tagihan PLN \n8. Tagihan PDAM \n9. Tagihan Indihome \n0. Kembali");
+        System.out.print("Pilihan Anda --> ");
+        String pilihan = input.readLine().trim();
+        
+        switch (pilihan) {
+            case "1" :
+                pesanan("SHPE");
+                this.buatPesanan();
+                break;
+            case "2" :
+                pesanan("TKPD");
+                this.buatPesanan();
+                break;
+            case "3" :
+                pesanan("LZDA");
+                this.buatPesanan();
+                break;
+            case "4" :
+                pesanan("SHP");
+                this.buatPesanan();
+                break;
+            case "5" :
+                pesanan("LZC");
+                this.buatPesanan();
+                break;
+            case "6" :
+                pesanan("GOP");
+                this.buatPesanan();
+                break;
+            case "7" :
+                pesanan("LSTR");
+                this.buatPesanan();
+                break;
+            case "8" :
+                pesanan("AIR");
+                this.buatPesanan();
+                break;
+            case "9" :
+                pesanan("WIFI");
+                this.buatPesanan();
+                break;
+            case "0" :
+                modeAdmin();
+                break;
+            default:
+                buatPesanan();
+                break;
+        }
+    }
+
+    private void pesanan(String pilihan) throws AWTException, IOException {
+        mn.clear();
+        System.out.println("====================================="); //tambahkan batal
+        System.out.println("Username Tujuan \nMasukkan yang benar karena tidak ada validasi");
+        System.out.println("Ketik 'batal' lalu enter untuk kembali");
+        String usernameTujuan = input.readLine().trim();
+        if (usernameTujuan.equals("batal")) {
+            buatPesanan();
+        }
+        
+        System.out.println("=====================================");
+        System.out.println("Nominal \nMasukkan yang benar karena tidak ada validasi");
+        System.out.println("Ketik 'batal' lalu enter untuk kembali");
+        String Nominal = input.readLine().trim();
+        if (Nominal.equals("batal")) {
+            buatPesanan();
+        }
+        
+        simpanDataPesanan(pilihan, usernameTujuan, Nominal);
+    }
+    
+    
+
+    private void simpanDataPesanan(String pilihan, String usernameTujuan, String Nominal) {
+        
         kon.koneksi();
+        String digit8 = "9999995";
+        String digit9 = "99999999";
+        String kode = null;
+        String tujuan = null;
+        
+        if (pilihan.equals("SHP") | pilihan.equals("LZC") | pilihan.equals("GOP") | pilihan.equals("AIR")) {
+            sql = "SELECT FLOOR(RAND() * " + digit9 + ")";
+            try {
+                rs = kon.stm.executeQuery(sql);
+                while (rs.next()) {                
+                    String RN = rs.getString(1); // RN = Random Number
+                    String NA = RN.replaceAll("\\.", ""); // NA = Nomor Acak
+                    kode = NA.replaceAll("E", "");
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            
+            tujuan = pilihan + kode;
+            
+        } else {
+            sql = "SELECT FLOOR(RAND() * " + digit8 + ")";
+            try {
+                rs = kon.stm.executeQuery(sql);
+                while (rs.next()) {                
+                    String RN = rs.getString(1); // RN = Random Number
+                    String NA = RN.replaceAll("\\.", ""); // NA = Nomor Acak
+                    kode = NA.replaceAll("E", "");
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            
+            tujuan = pilihan + kode;
+        }
+        
+        String nm_transaksi = null;
+        switch (pilihan) {
+            case "SHPE":
+                nm_transaksi = "Pembayaran Shopee";
+                break;
+            case "TKPD" :
+                nm_transaksi = "Pembayaran Tokopedia";
+                break;
+            case "LZDA" :
+                nm_transaksi = "Pembayaran Tokoedia";
+                break;
+            case "SHP" :
+                nm_transaksi = "Top Up Shopeepay";
+                break;
+            case "LZC" :
+                nm_transaksi = "Top Up Lazada Credit";
+                break;
+            case "GOP" :
+                nm_transaksi = "Top Up Gopay";
+                break;
+            case "LSTR" :
+                nm_transaksi = "Tagihan PLN";
+                break;
+            case "AIR" :
+                nm_transaksi = "Tagihan PDAM";
+                break;
+            case "WIFI" :
+                nm_transaksi = "Tagihan Indihome";
+                break;
+            default:
+                break;
+        }
+        
+        sql = "INSERT INTO transaksi VALUES(null, null, null, '" + nm_transaksi + "', '" + 
+                tujuan + "', '" + usernameTujuan + "', " + Nominal + ", 'Pending')";
         try {
             pst = kon.conn.prepareStatement(sql);
             pst.execute();
+            System.out.println("=====================================");
+            System.out.println("Nama Transaksi : " + nm_transaksi);
+            System.out.println("Kode Anda : " + tujuan);
+            try {
+                System.out.println("=====================================");
+                System.out.println("SIlakan Copy/Screenshot Kode diatas \nTimer: 10 detik");
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void buatPesanan() {
+    private void hapusPesanan() throws AWTException, IOException {
+        mn.clear();
+        kon.koneksi();
+        
+        ArrayList dataid = new ArrayList();
+        
         System.out.println("=====================================");
-        System.out.println("1. ");
+        try {
+            sql = "SELECT * FROM transaksi WHERE status='Pending'";
+            String format = "| %-3s | %-15s | %-20s | %-20s | %10s |";
+            System.out.println(String.format(format, "ID", "Nama Transaksi", "Tujuan", 
+                    "Nama Penerima", "Nominal"));
+            rs = kon.stm.executeQuery(sql);
+            
+            while (rs.next()) {
+                System.out.println(String.format(format, rs.getString(1), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7)));
+                dataid.add(rs.getString(1));
+            }
+            System.out.println("\nPilih Id lalu tekan enter");
+            String pilihan = input.readLine().trim();
+            
+            for (int i = 0; i < dataid.size(); i++) {
+                if (pilihan.equals(dataid.get(i))) {
+                    hpsPesanan(pilihan);
+                } else {
+                    System.out.println("Masuk-kan Id yang benar");
+                    mn.Delayy();
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void hpsPesanan(String pilihan) {
+        sql = "DELETE FROM transaksi WHERE id=" + pilihan;
+        try {
+            pst = kon.conn.prepareStatement(sql);
+            pst.execute();
+            System.out.println("Pesanan berhasil dihapus");
+            mn.Delayy();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
